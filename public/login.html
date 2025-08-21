@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrift Shop - Masuk</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        .bg-blur {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981',
+                        secondary: '#6B7280'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen w-full bg-cover bg-center" style="background-image: url('https://readdy.ai/api/search-image?query=vintage%20clothing%20store%20interior%20with%20warm%20lighting%2C%20racks%20of%20second%20hand%20clothes%20neatly%20arranged%2C%20cozy%20and%20inviting%20atmosphere%2C%20soft%20focus%20background%20perfect%20for%20login%20page&width=1920&height=1080&seq=1&orientation=landscape')">
+    <div class="min-h-screen w-full flex items-center justify-center bg-black/30">
+        <div class="w-full max-w-md mx-4">
+            <div class="bg-blur rounded-lg shadow-2xl p-8">
+                <div class="text-center mb-8">
+                    <h1 class="font-['Pacifico'] text-4xl text-primary mb-2">logo</h1>
+                    <p class="text-gray-600">Selamat datang kembali!</p>
+                </div>
+                
+                <form class="space-y-6">
+                    <div>
+                        <div class="relative">
+                            <input type="email" placeholder="Alamat Email" class="w-full px-4 py-3 bg-white border border-gray-200 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm" required>
+                            <div class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="relative">
+                            <input type="password" placeholder="Kata Sandi" class="w-full px-4 py-3 bg-white border border-gray-200 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm" required>
+                            <div class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-lock-line"></i>
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-2">
+                            <a href="#" class="text-sm text-primary hover:text-primary/80 transition-colors">Lupa kata sandi?</a>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full !rounded-button bg-primary text-white py-3 hover:bg-primary/90 transition-colors text-sm font-medium whitespace-nowrap">Masuk</button>
+                    
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-200"></div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <span class="px-4 text-sm text-gray-500 bg-white">atau masuk dengan</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <button type="button" class="flex items-center justify-center gap-2 px-4 py-2 border border-gray-200 rounded !rounded-button hover:bg-gray-50 transition-colors whitespace-nowrap">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-facebook-fill text-[#1877F2]"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Facebook</span>
+                        </button>
+                        <button type="button" class="flex items-center justify-center gap-2 px-4 py-2 border border-gray-200 rounded !rounded-button hover:bg-gray-50 transition-colors whitespace-nowrap">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-google-fill text-[#DB4437]"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Google</span>
+                        </button>
+                    </div>
+                    
+                    <p class="text-center text-sm text-gray-600">
+                        Belum punya akun? 
+                        <a href="#" class="text-primary hover:text-primary/80 transition-colors font-medium">Daftar sekarang</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop - 4</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#000000',
+                        secondary: '#6B7280'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        .search-input:focus { outline: none; }
+        .search-input::placeholder { color: #9ca3af; }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none; margin: 0;
+        }
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Cart badge styles */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        .cart-button:hover .cart-badge {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-200 py-3 px-4 shadow-sm">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="w-24 font-['Pacifico'] text-xl">Desktop - 4</div>
+            <div class="relative w-full max-w-md">
+                <input type="text" id="search-input" placeholder="Cari produk" class="search-input w-full py-2 px-4 pr-10 rounded-full border-none bg-white text-sm">
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-500">
+                    <i class="ri-search-line"></i>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4 ml-4">
+                <div class="relative cart-button">
+                    <button id="cart-button" class="w-8 h-8 flex items-center justify-center bg-transparent hover:bg-gray-300 rounded-full transition-colors">
+                        <i class="ri-shopping-cart-line text-gray-700"></i>
+                    </button>
+                    <span id="cart-badge" class="cart-badge hidden">0</span>
+                </div>
+                <button id="profile-button" class="w-8 h-8 flex items-center justify-center bg-transparent hover:bg-gray-300 rounded-full transition-colors">
+                    <i class="ri-user-line text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200">
+        <div class="container mx-auto">
+            <ul class="flex space-x-8 px-4">
+                <li><a href="#" class="block py-4 font-medium text-gray-800 hover:text-primary">Pria</a></li>
+                <li><a href="#" class="block py-4 font-medium text-gray-800 hover:text-primary">Wanita</a></li>
+                <li><a href="#" class="block py-4 font-medium text-gray-800 hover:text-primary">Anak</a></li>
+                <li><a href="#" class="block py-4 font-medium text-gray-800 hover:text-primary">Olahraga</a></li>
+                <li><a href="#" class="block py-4 font-medium text-gray-800 hover:text-primary">Merek</a></li>
+                <li><a href="#" class="block py-4 font-medium text-gray-800 hover:text-primary">Diskon</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-8 px-4">
+        <!-- Categories -->
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="bg-gray-200 p-2 text-center">Ethnic fashion</div>
+            <div class="bg-gray-200 p-2 text-center">Latest fashion</div>
+            <div class="bg-gray-200 p-2 text-center">Latest makeup</div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+
+        <!-- Shopping Section -->
+        <div class="bg-gray-200 p-4 mb-4 text-center">
+            <p>Shopping according to your budget</p>
+        </div>
+
+        <!-- Brands -->
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div class="bg-gray-200 p-2 text-center">Lacoste</div>
+            <div class="bg-gray-200 p-2 text-center">Adidas</div>
+            <div class="bg-gray-200 p-2 text-center">Levi's</div>
+            <div class="bg-gray-200 p-2 text-center">Polo</div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-6">
+        <div class="container mx-auto px-4 text-center lg:text-left">
+            <!-- Main Description -->
+            <p class="text-lg font-medium text-gray-800 mb-6">
+                Thrift shop is a complete, safe and secure thrifting place
+            </p>
+
+            <!-- Columns -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+                <!-- Thriftshop Column -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-2">Thriftshop</h3>
+                    <ul class="space-y-1 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-primary">About Us</a></li>
+                        <li><a href="#" class="hover:text-primary">Blog</a></li>
+                        <li><a href="#" class="hover:text-primary">News</a></li>
+                    </ul>
+                </div>
+
+                <!-- Discover Column -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-2">Discover</h3>
+                    <ul class="space-y-1 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-primary">how it works</a></li>
+                    </ul>
+                </div>
+
+                <!-- Help Column -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 mb-2">Help</h3>
+                    <ul class="space-y-1 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-primary">Faq</a></li>
+                        <li><a href="#" class="hover:text-primary">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Social Media and Terms -->
+            <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                <!-- Social Media Icons -->
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-primary">
+                        <i class="ri-instagram-line text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary">
+                        <i class="ri-facebook-box-line text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary">
+                        <i class="ri-twitter-x-line text-xl"></i>
+                    </a>
+                </div>
+
+                <!-- Terms Link -->
+                <p class="text-sm text-gray-600">
+                    <a href="#" class="hover:text-primary">Terms & Condition</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Store all products
+        let allProducts = [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Function to update cart badge
+        function updateCartBadge() {
+            const cartBadge = document.getElementById('cart-badge');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartBadge.textContent = totalItems;
+            cartBadge.classList.toggle('hidden', totalItems === 0);
+        }
+
+        // Fetch data from the API
+        fetch('https://fakestoreapi.com/products')
+            .then(response => response.json())
+            .then(products => {
+                allProducts = products; // Store all products
+                displayProducts(allProducts.slice(0, 6)); // Display initial 6 products
+                updateCartBadge(); // Initial badge update
+
+                // Event listener for cart button
+                document.getElementById('cart-button').addEventListener('click', () => {
+                    window.location.href = 'keranjang.html';
+                });
+
+                // Event listener for profile button
+                document.getElementById('profile-button').addEventListener('click', () => {
+                    window.location.href = 'profile.html';
+                });
+
+                // Event listener for search input
+                document.getElementById('search-input').addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const filteredProducts = allProducts.filter(product =>
+                        product.title.toLowerCase().includes(searchTerm)
+                    );
+                    displayProducts(filteredProducts.slice(0, 6)); // Display top 6 filtered products
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+
+        // Function to display products
+        function displayProducts(products) {
+            const productsGrid = document.getElementById('products-grid');
+            productsGrid.innerHTML = ''; // Clear current products
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col h-full';
+                productDiv.innerHTML = `
+                    <a href="detail.html?id=${product.id}" class="flex-grow">
+                        <img src="${product.image}" alt="${product.title}" class="w-full h-48 object-contain mb-4">
+                        <h3 class="text-lg font-semibold">${product.title}</h3>
+                        <p class="text-gray-600">$${product.price}</p>
+                    </a>
+                    <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="addToCart(${product.id}, '${product.title}', ${product.price}, '${product.image}')">Add to Cart</button>
+                `;
+                productsGrid.appendChild(productDiv);
+            });
+        }
+
+        // Function to add product to cart and show notification
+        function addToCart(id, title, price, image) {
+            const product = { id, title, price, image, quantity: 1 };
+            const existingProduct = cart.find(item => item.id === id);
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showNotification(`${title} ditambahkan ke keranjang!`);
+            updateCartBadge(); // Update badge after adding to cart
+        }
+
+        // Function to show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            // Hide and remove notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300); // Wait for fade-out transition
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

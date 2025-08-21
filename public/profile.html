@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrift Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header input {
+            padding: 5px;
+            width: 200px;
+        }
+        .header .icons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .header .icons button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .profile-form {
+            background-color: #ccc;
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+        }
+        .profile-form img {
+            width: 100px;
+            height: 100px;
+            background-color: #666;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .profile-form input {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 5px;
+        }
+        .profile-form select {
+            display: block;
+            width: 95%;
+            margin: 10px auto;
+            padding: 5px;
+        }
+        .profile-form button {
+            display: block;
+            width: 95%;
+            padding: 10px;
+            margin: 10px auto;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .footer .payment-methods {
+            margin: 10px 0;
+        }
+        .footer .social-media {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>thriftshop</div>
+        <input type="text" placeholder="Search...">
+        <div class="icons">
+            <span>🛒</span>
+            <span>⚙️</span>
+            <button id="header-orders-btn">Pesanan Saya</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="profile-form">
+            <h2>Profil Saya</h2>
+            <input type="text" id="full-name" placeholder="Nama Lengkap">
+            <input type="text" id="username" placeholder="Username">
+            <input type="email" id="email" placeholder="Email Pengguna">
+            <input type="password" id="password" placeholder="Kata Sandi">
+            <select id="gender">
+                <option value="">Jenis Kelamin</option>
+                <option value="male">Laki-laki</option>
+                <option value="female">Perempuan</option>
+            </select>
+            <button id="save-btn">Simpan</button>
+            <button id="orders-btn">Pesanan Saya</button>
+        </div>
+    </div>
+    <div class="footer">
+        <div>Pembayaran</div>
+        <div class="payment-methods">💳 💵 💸</div>
+        <div class="social-media">📱 🌐</div>
+        <div>Download Aplikasi</div>
+        <div>Google Play | App Store</div>
+        <div>Lacak Pesanan Anda | Hubungi Kami</div>
+    </div>
+
+    <script>
+        // Load saved profile data from localStorage
+        const savedProfile = JSON.parse(localStorage.getItem('profile')) || {};
+        if (savedProfile) {
+            document.getElementById('full-name').value = savedProfile.fullName || '';
+            document.getElementById('username').value = savedProfile.username || '';
+            document.getElementById('email').value = savedProfile.email || '';
+            document.getElementById('password').value = savedProfile.password || '';
+            document.getElementById('gender').value = savedProfile.gender || '';
+        }
+
+        // Save profile data to localStorage
+        document.getElementById('save-btn').addEventListener('click', () => {
+            const profile = {
+                fullName: document.getElementById('full-name').value,
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                gender: document.getElementById('gender').value
+            };
+            localStorage.setItem('profile', JSON.stringify(profile));
+            alert('Profil berhasil disimpan!');
+        });
+
+        // Navigate to orders page (placeholder for profile form button)
+        document.getElementById('orders-btn').addEventListener('click', () => {
+            alert('Navigasi ke halaman Pesanan Saya');
+            // Future implementation: window.location.href = 'orders.html';
+        });
+
+        // Navigate to orders page (placeholder for header button)
+        document.getElementById('header-orders-btn').addEventListener('click', () => {
+            alert('Navigasi ke halaman Pesanan Saya');
+            // Future implementation: window.location.href = 'orders.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrift Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .header {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #fff;
+        }
+        .header input {
+            padding: 5px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .header .nav {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+        }
+        .container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product {
+            background-color: #d9d9d9;
+            width: 600px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+        }
+        .product img {
+            width: 80px;
+            height: 80px;
+            background-color: #999;
+            margin-right: 15px;
+        }
+        .product .details {
+            flex-grow: 1;
+            font-size: 14px;
+        }
+        .product .details input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .product .price {
+            font-weight: bold;
+            margin: 0 15px;
+            min-width: 100px;
+            text-align: right;
+        }
+        .product .quantity {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 15px;
+        }
+        .product .quantity button {
+            background-color: #666;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+        .product .quantity span {
+            width: 30px;
+            text-align: center;
+        }
+        .product button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .summary {
+            background-color: #e6e6e6;
+            width: 600px;
+            padding: 15px;
+            text-align: right;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .summary p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .summary button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        /* Styles for the checkout modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            width: 500px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            font-size: 18px;
+            text-align: center;
+        }
+        .modal-content .product-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .modal-content .product-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .modal-content .product-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .modal-content .product-item .details {
+            flex-grow: 1;
+        }
+        .modal-content .product-item .price {
+            font-weight: bold;
+        }
+        .modal-content .total {
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .modal-content .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .modal-content .buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .modal-content .buttons .confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        .modal-content .buttons .cancel {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="font-size: 20px; font-weight: bold;">thriftshop</div>
+        <input type="text" placeholder="Search...">
+        <div class="nav">HOME | BANTUAN | PROMO | TENTANG GLOSHOP</div>
+    </div>
+    <div class="container" id="cart-container">
+        <!-- Products will be dynamically inserted here -->
+    </div>
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content">
+            <h2>Konfirmasi Checkout</h2>
+            <div class="product-list" id="checkout-product-list"></div>
+            <div class="total" id="checkout-total"></div>
+            <div class="buttons">
+                <button class="cancel" onclick="closeModal()">Batal</button>
+                <button class="confirm" onclick="confirmCheckout()">Konfirmasi</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Load cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartContainer = document.getElementById('cart-container');
+        const checkoutModal = document.getElementById('checkout-modal');
+
+        function updateCart() {
+            cartContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="details">
+                        <input type="checkbox" data-id="${item.id}" ${item.selected ? 'checked' : ''} onchange="toggleSelection(${item.id})"> ${item.title}
+                    </div>
+                    <div class="price">Rp ${item.price.toLocaleString('id-ID')}</div>
+                    <div class="quantity">
+                        <button onclick="decreaseQuantity(${item.id})">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="increaseQuantity(${item.id})">+</button>
+                    </div>
+                    <button onclick="removeItem(${item.id})">Hapus</button>
+                `;
+                cartContainer.appendChild(productDiv);
+                if (item.selected) {
+                    total += item.price * item.quantity;
+                }
+            });
+
+            const summaryDiv = document.createElement('div');
+            summaryDiv.className = 'summary';
+            summaryDiv.innerHTML = `
+                <p>Poin Sisa (31)</p>
+                <p>Total (${cart.filter(item => item.selected).length} produk): Rp ${total.toLocaleString('id-ID')}</p>
+                <button id="checkout-btn">Checkout</button>
+            `;
+            cartContainer.appendChild(summaryDiv);
+
+            // Add event listener for checkout button
+            const checkoutBtn = document.getElementById('checkout-btn');
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener('click', checkout);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function toggleSelection(id) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.selected = !item.selected;
+                updateCart();
+            }
+        }
+
+        function decreaseQuantity(id) {
+            const item = cart.find(item => item.id === id);
+            if (item && item.quantity > 1) {
+                item.quantity -= 1;
+                updateCart();
+            }
+        }
+
+        function increaseQuantity(id) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += 1;
+                updateCart();
+            }
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+
+        function checkout() {
+            const selectedItems = cart.filter(item => item.selected);
+            if (selectedItems.length === 0) {
+                alert('Pilih setidaknya satu produk untuk checkout!');
+                return;
+            }
+
+            // Populate modal with selected products
+            const productList = document.getElementById('checkout-product-list');
+            productList.innerHTML = '';
+            let total = 0;
+
+            selectedItems.forEach(item => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="details">${item.title} (x${item.quantity})</div>
+                    <div class="price">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                `;
+                productList.appendChild(productItem);
+                total += item.price * item.quantity;
+            });
+
+            document.getElementById('checkout-total').textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+            checkoutModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            checkoutModal.style.display = 'none';
+        }
+
+        function confirmCheckout() {
+            if (confirm('Apakah Anda yakin ingin checkout?')) {
+                alert('Terima kasih atas pembelian Anda! Keranjang telah dikosongkan.');
+                cart = cart.filter(item => !item.selected); // Remove only selected items
+                localStorage.setItem('cart', JSON.stringify(cart));
+                closeModal();
+                updateCart();
+            }
+        }
+
+        // Initialize cart display
+        cart = cart.map(item => ({ ...item, selected: item.selected ?? true })); // Ensure existing items have selected property
+        updateCart();
+    </script>
+</body>
+</html>

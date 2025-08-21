@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrift Shop - Sign Up</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#10b981',secondary:'#6366f1'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        .form-input:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full min-h-screen flex items-center justify-center bg-cover bg-center relative" style="background-image: url('https://readdy.ai/api/search-image?query=vintage%2520clothing%2520store%2520with%2520various%2520colorful%2520second-hand%2520clothes%2520hanging%2520on%2520racks%252C%2520soft%2520lighting%252C%2520warm%2520atmosphere%252C%2520blurred%2520background%252C%2520muted%2520colors%252C%2520high%2520quality%2520professional%2520photography&width=1200&height=800&seq=thrift123&orientation=landscape');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        
+        <div class="absolute top-8 left-8 z-10">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h1 class="font-['Pacifico'] text-2xl text-primary">Thrift Shop</h1>
+            </div>
+        </div>
+        
+        <div class="bg-white/90 backdrop-blur-sm p-8 rounded-lg shadow-xl w-full max-w-md mx-4 z-10">
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Sign Up</h2>
+            
+            <form class="space-y-4">
+                <div class="relative">
+                    <input type="email" placeholder="E-mail" 
+                        class="form-input w-full px-4 py-3 rounded border border-gray-300 text-gray-700">
+                </div>
+                
+                <div class="relative">
+                    <input type="number" placeholder="Number" 
+                        class="form-input w-full px-4 py-3 rounded border border-gray-300 text-gray-700">
+                </div>
+                
+                <div class="relative">
+                    <input type="password" placeholder="Password" 
+                        class="form-input w-full px-4 py-3 rounded border border-gray-300 text-gray-700">
+                </div>
+                
+                <div class="relative">
+                    <input type="password" placeholder="Confirm Password" 
+                        class="form-input w-full px-4 py-3 rounded border border-gray-300 text-gray-700">
+                </div>
+                
+                <div class="flex space-x-4 my-6">
+                    <button type="button" class="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded !rounded-button hover:bg-blue-700 transition whitespace-nowrap">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-facebook-fill"></i>
+                        </div>
+                        <span>Facebook</span>
+                    </button>
+                    
+                    <button type="button" class="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-red-500 text-white rounded !rounded-button hover:bg-red-600 transition whitespace-nowrap">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-google-fill"></i>
+                        </div>
+                        <span>Google</span>
+                    </button>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary text-white py-3 rounded !rounded-button hover:bg-primary/90 transition duration-300 font-medium whitespace-nowrap">
+                    Sign Up
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script id="form-validation">
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = form.querySelector('input[type="email"]').value;
+                const number = form.querySelector('input[type="number"]').value;
+                const password = form.querySelectorAll('input[type="password"]')[0].value;
+                const confirmPassword = form.querySelectorAll('input[type="password"]')[1].value;
+                
+                if (!email || !number || !password || !confirmPassword) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                alert('Sign up successful!');
+            });
+        });
+    </script>
+</body>
+</html>
